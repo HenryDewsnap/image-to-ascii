@@ -11,13 +11,16 @@ def sum_tuple(tuple):
     return out
 
 pixels  = list(" .:-=+*#%@")
+#pixels  = list("$@B%8&WM#*oahkbdpqwmZO0QLCJUYXzcvunxrjft/\|()1{}[]?-_+~<>i!lI;:,^`'. ")
 max_val = sum_tuple((255,255,255))
 divider = math.ceil(max_val/len(pixels))
 
 if __name__ == "__main__":
     image, size = get_pixels(input(f"[Image name/Image path]-> "))
     out_width = int(input("Enter Image Width-> "))
-    out_size = [out_width,math.floor(size[1]/(size[0]/out_width))]
+    if input("Auto Aspect Ratio (y/n): ") == "n":
+        out_size = [out_width, int(input("Enter Image Height-> "))]
+    else: out_size = [out_width,math.floor(size[1]/(size[0]/out_width))]
     dimensional_multiplers = [0,0]; dimensional_multiplers[0] = math.floor(size[0]/out_size[0]); dimensional_multiplers[1] = math.floor(size[1]/out_size[1])
     out_matrix = [[0 for x in range(out_size[0])] for y in range(out_size[1])]
     for y in range(out_size[1]):
