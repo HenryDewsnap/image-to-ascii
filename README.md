@@ -15,3 +15,4 @@
 3.) Value Divided by (255+255+255 / length of asciicharacters) to get the index of the ascii-character
 4.) Prints this ascii-character
 ```
+### Anything Other Than .jpg is kinda borken
