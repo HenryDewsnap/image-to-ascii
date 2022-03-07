@@ -3,10 +3,10 @@ import math
 
 def get_pixels(path):
     ##Png's are wierd );
-    if path.endswith(".png"):
+    if not path.endswith(".png"):
         im = Image.open(path)
-        bg = Image.new("RGB", im.size, (255,255,255)) ##Set this to 0,0,0 if you want a clear background
-        bg.paste(im,im); bg.save(path)
+        rgb_im = im.convert("RGB")
+        rgb_im.save(path)
     image = Image.open(path)
     return image.load(), image.size
 
@@ -31,5 +31,5 @@ if __name__ == "__main__":
     multipliers = [size[0]/out_size[0], size[1]/out_size[1]]
     for y in range(out_size[1]):
         for x in range(out_size[0]):
-            print(pixels[ int(sum_tuple(image[x*multipliers[0],y*multipliers[1]])/divider) ], end="")
+            print(pixels[ int(sum_tuple(image[x*multipliers[0],y*multipliers[1]])/divider) ], end=" ")
         print()
