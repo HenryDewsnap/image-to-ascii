@@ -2,6 +2,11 @@ from PIL import Image
 import math
 
 def get_pixels(path):
+    ##Png's are wierd );
+    if path.endswith(".png"):
+        im = Image.open(path)
+        bg = Image.new("RGB", im.size, (255,255,255)) ##Set this to 0,0,0 if you want a clear background
+        bg.paste(im,im); bg.save(path)
     image = Image.open(path)
     return image.load(), image.size
 
@@ -17,13 +22,14 @@ divider = math.ceil(max_val/len(pixels))
 
 if __name__ == "__main__":
     image, size = get_pixels(input(f"[Image name/Image path]-> "))
+
+    print(f"Image Dimensions: {size}")
     out_width = int(input("Enter Image Width-> "))
     if input("Auto Aspect Ratio (y/n): ") == "n":
         out_size = [out_width, int(input("Enter Image Height-> "))]
-    else: out_size = [out_width,math.floor(size[1]/(size[0]/out_width))]
-    dimensional_multiplers = [0,0]; dimensional_multiplers[0] = math.floor(size[0]/out_size[0]); dimensional_multiplers[1] = math.floor(size[1]/out_size[1])
-    out_matrix = [[0 for x in range(out_size[0])] for y in range(out_size[1])]
+    else: out_size = [out_width,math.floor(size[1]/(size[0]/out_width))-1]
+    multipliers = [size[0]/out_size[0], size[1]/out_size[1]]
     for y in range(out_size[1]):
         for x in range(out_size[0]):
-            print(pixels[int(sum_tuple(image[x*dimensional_multiplers[0],y*dimensional_multiplers[1]])/divider)],end=" ")
+            print(pixels[ int(sum_tuple(image[x*multipliers[0],y*multipliers[1]])/divider) ], end="")
         print()
